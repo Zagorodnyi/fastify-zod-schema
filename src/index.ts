@@ -4,8 +4,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema'
 import { z } from 'zod'
 import './modules'
 
-
-function registerZod(fastify: FastifyInstance,  params: any, done: (err?: any) => void) {
+function zodSchemaPlugin(fastify: FastifyInstance,  params: any, done: (err?: any) => void) {
   fastify.setValidatorCompiler<z.Schema>(({ schema, method, url, httpPart }) => {
     return data => {
       try {
@@ -31,5 +30,5 @@ function registerZod(fastify: FastifyInstance,  params: any, done: (err?: any) =
 }
 
 //@ts-ignore
-registerZod[Symbol.for('skip-override')] = true
-export { registerZod }
+zodSchemaPlugin[Symbol.for('skip-override')] = true
+export { zodSchemaPlugin }
