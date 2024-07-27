@@ -1,0 +1,19 @@
+{
+  "name": "fastify-zod-schema",
+  "version": "1.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fast-json-stringify": "^6.0.0",
+    "fastify": "^4.28.1",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.1"
+  }
+}
