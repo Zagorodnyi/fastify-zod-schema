@@ -80,6 +80,7 @@ app.get('/protected', { schema }, async (req, rep) => {
 });
 ```
 
+### Example 4: Combining Body, Query, Headers and Response Validation
 
 ```js
 import z from 'zod'
