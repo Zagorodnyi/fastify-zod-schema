@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerZod = void 0;
+exports.zodSchemaPlugin = void 0;
 const fast_json_stringify_1 = __importDefault(require("fast-json-stringify"));
 const zod_to_json_schema_1 = require("zod-to-json-schema");
 require("./modules");
-function registerZod(fastify, params, done) {
+function zodSchemaPlugin(fastify, params, done) {
     fastify.setValidatorCompiler(({ schema, method, url, httpPart }) => {
         return data => {
             try {
@@ -29,6 +29,6 @@ function registerZod(fastify, params, done) {
     });
     done();
 }
-exports.registerZod = registerZod;
+exports.zodSchemaPlugin = zodSchemaPlugin;
 //@ts-ignore
-registerZod[Symbol.for('skip-override')] = true;
+zodSchemaPlugin[Symbol.for('skip-override')] = true;

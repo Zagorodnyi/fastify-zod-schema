@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
 import './modules';
-declare function registerZod(fastify: FastifyInstance, params: any, done: (err?: any) => void): void;
-export { registerZod };
+declare function zodSchemaPlugin(fastify: FastifyInstance, params: any, done: (err?: any) => void): void;
+export { zodSchemaPlugin };
 //# sourceMappingURL=index.d.ts.map
