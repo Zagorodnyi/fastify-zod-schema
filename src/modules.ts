@@ -10,7 +10,8 @@ import { Schema, z } from "zod";
 
 declare module "fastify" {
   interface FastifyTypeProviderDefault {
-    output: this["input"] extends Schema ? z.infer<this["input"]> : unknown;
+    validator: this["schema"] extends Schema ? z.infer<this["schema"]> : unknown;
+    serializer:  this["schema"] extends Schema ? z.infer<this["schema"]> : unknown;
   }
 }
 

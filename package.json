@@ -1,6 +1,6 @@
 {
   "name": "fastify-zod-schema",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A Fastify plugin that allows users to define request schemas using Zod, providing type safety and validation.",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -8,11 +8,11 @@
     "build": "tsc"
   },
   "keywords": [
-      "fastify",
-      "zod",
-      "schema",
-      "validation"
-    ],
+    "fastify",
+    "zod",
+    "schema",
+    "validation"
+  ],
   "author": "Viacheslav Zahorodnyi",
   "license": "MIT",
   "repository": {
@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "fast-json-stringify": "^6.0.0",
-    "fastify": "^4.28.1",
+    "fastify": "^5.1.0",
     "zod": "^3.23.8",
-    "zod-to-json-schema": "^3.23.1"
+    "zod-to-json-schema": "^3.23.5"
   }
 }

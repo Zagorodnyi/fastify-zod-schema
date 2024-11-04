@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.zodSchemaPlugin = void 0;
 const fast_json_stringify_1 = __importDefault(require("fast-json-stringify"));
-const zod_to_json_schema_1 = require("zod-to-json-schema");
+const zod_to_json_schema_1 = __importDefault(require("zod-to-json-schema"));
 require("./modules");
 function zodSchemaPlugin(fastify, params, done) {
     fastify.setValidatorCompiler(({ schema, method, url, httpPart }) => {
@@ -20,7 +20,7 @@ function zodSchemaPlugin(fastify, params, done) {
         };
     });
     fastify.setSerializerCompiler(({ schema, method, url, httpStatus, contentType }) => {
-        const jsonSchema = (0, zod_to_json_schema_1.zodToJsonSchema)(schema);
+        const jsonSchema = (0, zod_to_json_schema_1.default)(schema);
         const stringify = (0, fast_json_stringify_1.default)(jsonSchema);
         return data => {
             const result = schema.safeParse(data);
