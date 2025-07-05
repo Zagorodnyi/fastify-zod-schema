@@ -1,11 +1,16 @@
 {
   "name": "fastify-zod-schema",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Fastify plugin that allows users to define request schemas using Zod, providing type safety and validation.",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "types":  "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc"
+    "build": "rm -rf dist && pkgroll --target=node18",
+    "test": "tsx --test src/plugin.test.ts"
   },
   "keywords": [
     "fastify",
@@ -24,9 +29,15 @@
     "url": "https://github.com/Zagorodnyi/fastify-zod-schema/issues"
   },
   "dependencies": {
-    "fast-json-stringify": "^6.0.0",
-    "fastify": "^5.1.0",
-    "zod": "^3.23.8",
-    "zod-to-json-schema": "^3.23.5"
+    "fast-json-stringify": "^6.0.1",
+    "fastify": "^5.4.0",
+    "zod": "^3.25.74",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "pkgroll": "^2.13.1",
+    "@types/node": "^24.0.10"
   }
 }

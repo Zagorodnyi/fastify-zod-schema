@@ -115,5 +115,3 @@ app.post('/login', { schema }, async (req, rep) => {
 ## License
 
 MIT
-
-Feel free to modify this documentation to better suit your needs or to add more details as necessary.
