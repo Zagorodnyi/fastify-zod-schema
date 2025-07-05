@@ -1,6 +1,13 @@
 # fastify-zod-schema
 
-`fastify-zod-schema` is a Fastify plugin that allows users to define request schemas using Zod, providing type safety and validation.
+`fastify-zod-schema` is a Fastify plugin that allows users to define request schemas using **Zod v4**, providing type safety and validation.
+
+### Zod versions support
+- v1.x.x - Zod v3 (default)
+- v2.x.x - Zod v4
+
+_Main branch is for latest version. v1 is supported and updated in separate branch._
+
 
 ## Installation
 
@@ -111,6 +118,10 @@ app.post('/login', { schema }, async (req, rep) => {
   return { username, role };
 });
 ```
+
+### Caveats
+- Version 4 is using zod native toJSONSchema transformer so all its restrictions and limitations are expected here as well. See [Zod Docs](https://zod.dev/json-schema#unrepresentable)
+- I plan to add plugin configuration to customize behaviour of the `toJsonSchema` method.
 
 ## License
 

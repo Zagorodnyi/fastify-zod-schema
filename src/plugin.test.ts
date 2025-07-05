@@ -1,82 +1,17 @@
-import { describe, test } from "node:test";
+import { before, describe, test } from "node:test";
 import assert from "node:assert/strict";
 
-import { z } from "zod";
+import fastify, { FastifyInstance } from "fastify";
+import * as z from "zod/v4";
+
 import { zodSchemaPlugin } from "./plugin";
 
-import fastify from "fastify";
+describe("General", () => {
+  let app: FastifyInstance;
 
-function getZodSchemas<T extends typeof z>(zod: T) {
-  const z = zod as any
-  const body = {
-    body: z.object({
-      data: z.number(),
-    }),
-    response: {
-      200: z.object({
-        ok: z.string(),
-        body: z.object({ data: z.number() }),
-      }),
-    },
-  };
-
-  const headers = {
-    headers: z.object({
-      "x-test-header": z.string(),
-    }),
-    response: {
-      200: z.object({
-        ok: z.string(),
-        headers: z.object({ "x-test-header": z.string() }),
-      }),
-    },
-  };
-
-  const queryParams = {
-    querystring: z.object({
-      page: z.coerce.number(),
-      limit: z.coerce.number(),
-    }),
-    response: {
-      200: z.object({
-        ok: z.string(),
-        query: z.object({
-          page: z.number(),
-          limit: z.number(),
-        }),
-      }),
-    },
-  };
-  return {
-    body,
-    queryParams,
-    headers,
-  };
-}
-
-function buildFastify(plugin: any, { body: bodySchema, headers: headersSchema, queryParams: queryParamsSchema }: any) {
-  const app = fastify();
-
-  app.register(plugin);
-  app.post("/", { schema: bodySchema }, function (request, reply) {
-    reply.send({ ok: "yes", body: request.body });
+  before(() => {
+    app = buildFastify();
   });
-
-  app.post("/headers", { schema: headersSchema }, function (request, reply) {
-    reply.send({ ok: "yes", headers: { "x-test-header": request.headers["x-test-header"] } });
-  });
-
-  app.post("/query", { schema: queryParamsSchema }, function (request, reply) {
-    reply.send({ ok: "yes", query: request.query });
-  });
-
-  return app;
-}
-
-
-
-describe("V3", () => {
-  const app = buildFastify(zodSchemaPlugin, getZodSchemas(z));
 
   test("Body parsing", async () => {
     const { json } = await app.inject({
@@ -125,3 +60,62 @@ describe("V3", () => {
     assert.partialDeepStrictEqual(res2.json(), { statusCode: 400, error: "Bad Request", code: "FST_ERR_VALIDATION" });
   });
 });
+
+const bodySchema = {
+  body: z.object({
+    data: z.number(),
+  }),
+  response: {
+    200: z.object({
+      ok: z.string(),
+      body: z.object({ data: z.number() }),
+    }),
+  },
+};
+
+const headersSchema = {
+  headers: z.object({
+    "x-test-header": z.string(),
+  }),
+  response: {
+    200: z.object({
+      ok: z.string(),
+      headers: z.object({ "x-test-header": z.string() }),
+    }),
+  },
+};
+
+const queryParamsSchema = {
+  querystring: z.object({
+    page: z.coerce.number(),
+    limit: z.coerce.number(),
+  }),
+  response: {
+    200: z.object({
+      ok: z.string(),
+      query: z.object({
+        page: z.number(),
+        limit: z.number(),
+      }),
+    }),
+  },
+};
+
+function buildFastify() {
+  const app = fastify();
+
+  app.register(zodSchemaPlugin);
+  app.post("/", { schema: bodySchema }, function (request, reply) {
+    reply.send({ ok: "yes", body: request.body });
+  });
+
+  app.post("/headers", { schema: headersSchema }, function (request, reply) {
+    reply.send({ ok: "yes", headers: { "x-test-header": request.headers["x-test-header"] } });
+  });
+
+  app.post("/query", { schema: queryParamsSchema }, function (request, reply) {
+    reply.send({ ok: "yes", query: request.query });
+  });
+
+  return app;
+}
