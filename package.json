@@ -1,6 +1,6 @@
 {
   "name": "fastify-zod-schema",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Fastify plugin that allows users to define request schemas using Zod, providing type safety and validation.",
   "types":  "./dist/index.d.ts",
   "main": "./dist/index.cjs",

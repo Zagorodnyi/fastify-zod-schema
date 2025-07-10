@@ -1,12 +1,11 @@
 import type { FastifyInstance } from 'fastify'
 import fastJson from 'fast-json-stringify'
-import zodToJsonSchema from 'zod-to-json-schema'
-import { z } from 'zod'
+import { z as v4 } from 'zod/v4'
 
 import './modules.d.ts'
 
 function zodSchemaPlugin(fastify: FastifyInstance,  params: any, done: (err?: any) => void) {
-  fastify.setValidatorCompiler<z.Schema>(({ schema, method, url, httpPart }) => {
+  fastify.setValidatorCompiler<v4.Schema>(({ schema, method, url, httpPart }) => {
     return data => {
       try {
         const parsed = schema.parse(data)
@@ -17,10 +16,9 @@ function zodSchemaPlugin(fastify: FastifyInstance,  params: any, done: (err?: an
     }
   })
 
-  fastify.setSerializerCompiler<z.Schema>(({ schema, method, url, httpStatus, contentType }) => {
-  const jsonSchema = zodToJsonSchema(schema)
+  fastify.setSerializerCompiler<v4.Schema>(({ schema, method, url, httpStatus, contentType }) => {
+    const jsonSchema = v4.toJSONSchema(schema, { target: 'draft-7' })
     const stringify = fastJson(jsonSchema as any)
-
     return data => {
       const result = schema.safeParse(data)
       return stringify(result.success ? result.data : data)
@@ -29,7 +27,6 @@ function zodSchemaPlugin(fastify: FastifyInstance,  params: any, done: (err?: an
 
   done()
 }
-
 
 
 //@ts-ignore
