@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 import fastJson from 'fast-json-stringify'
-import zodToJsonSchema from 'zod-to-json-schema'
+import { zodToJsonSchema } from 'zod-to-json-schema';
 import { z } from 'zod'
 
 import './modules.d.ts'
