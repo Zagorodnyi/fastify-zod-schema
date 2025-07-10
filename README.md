@@ -6,7 +6,7 @@
 - v1.x.x - Zod v3 (default)
 - v2.x.x - Zod v4
 
-_Main branch is for latest version. v1 is supported and updated in separate branch._
+_The `main` branch is for the latest version. v1 is supported and updated in a separate branch._
 
 
 ## Installation
@@ -37,7 +37,7 @@ With `fastify-zod-schema`, you can define your request schemas using Zod. Below 
 
 ### Example 1: Basic Route Validation
 ```js
-import z from 'zod'
+import z from 'zod/v4'
 
 const schema = {
   body: z.object({
@@ -55,7 +55,7 @@ app.post('/user', { schema }, async (req, rep) => {
 ### Example 2: Query Parameters Validation
 
 ```js
-import z from 'zod'
+import z from 'zod/v4'
 
 const schema = {
   querystring: z.object({
@@ -73,7 +73,7 @@ app.get('/search', { schema }, async (req, rep) => {
 ### Example 3: Headers Validation
 
 ```js
-import z from 'zod'
+import z from 'zod/v4'
 
 const schema = {
   headers: z.object({
@@ -90,7 +90,7 @@ app.get('/protected', { schema }, async (req, rep) => {
 ### Example 4: Combining Body, Query, Headers and Response Validation
 
 ```js
-import z from 'zod'
+import z from 'zod/v4'
 
 const schema = {
   body: z.object({
@@ -121,7 +121,7 @@ app.post('/login', { schema }, async (req, rep) => {
 
 ### Caveats
 - Version 4 is using zod native toJSONSchema transformer so all its restrictions and limitations are expected here as well. See [Zod Docs](https://zod.dev/json-schema#unrepresentable)
-- I plan to add plugin configuration to customize behaviour of the `toJsonSchema` method.
+- Plugin configuration for customizing the `toJsonSchema` method will be added in future versions.
 
 ## License
 
