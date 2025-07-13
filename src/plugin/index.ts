@@ -3,7 +3,7 @@ import fastJson from 'fast-json-stringify'
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { z } from 'zod'
 
-import './modules.d.ts'
+import './modules.ts'
 
 function zodSchemaPlugin(fastify: FastifyInstance,  params: any, done: (err?: any) => void) {
   fastify.setValidatorCompiler<z.Schema>(({ schema, method, url, httpPart }) => {
