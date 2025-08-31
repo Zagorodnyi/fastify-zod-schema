@@ -6,12 +6,12 @@ import type {
   FastifyPluginCallback,
   FastifyPluginAsync,
 } from "fastify";
-import { z } from "zod/v4";
+import type { input, output } from 'zod/v4/core'
 
 declare module "fastify" {
   interface FastifyTypeProviderDefault {
-    validator: this["schema"] extends z.ZodType ? z.infer<this["schema"]> : unknown;
-    serializer:  this["schema"] extends z.ZodType ? z.infer<this["schema"]> : unknown;
+    validator: output<this['schema']>
+    serializer: input<this['schema']>
   }
 }
 
