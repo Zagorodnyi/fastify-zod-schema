@@ -2,7 +2,7 @@ import { before, describe, test } from "node:test";
 import assert from "node:assert/strict";
 
 import fastify, { FastifyInstance } from "fastify";
-import * as z from "zod/v4";
+import z from "zod";
 
 import { zodSchemaPlugin } from "./plugin";
 
@@ -14,13 +14,14 @@ describe("General", () => {
   });
 
   test("Body parsing", async () => {
+    const date = new Date().toISOString()
     const { json } = await app.inject({
       method: "POST",
       url: "/",
-      body: { data: 12 },
+      body: { data: 12, date },
     });
 
-    assert.deepStrictEqual(json(), { ok: "yes", body: { data: 12 } });
+    assert.deepStrictEqual(json(), { ok: "yes", body: { data: 12, date } });
   });
 
   test("Headers parsing", async (t) => {
@@ -64,11 +65,12 @@ describe("General", () => {
 const bodySchema = {
   body: z.object({
     data: z.number(),
+    date: z.coerce.date(),
   }),
   response: {
     200: z.object({
       ok: z.string(),
-      body: z.object({ data: z.number() }),
+      body: z.object({ data: z.number(), date: z.date() }),
     }),
   },
 };
